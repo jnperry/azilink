@@ -1,0 +1,10 @@
+This program uses Ant to compile.  Just run "ant" for a list of compile options.
+
+Steps to compile:
+
+1) Edit local.properties to point to the Android 1.5 SDK.
+2) Make sure you've got ant installed
+3) Run "ant debug" to generate the binaries!
+
+If you want to use Eclipse, be sure to add systemprop.jar as an external library.
+
