@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">AziLink</string>
+	<string name="status_unknown">Service is not running!</string>
+	<string name="status_listen">Waiting for connection</string>
+	<string name="status_active">Connected to host</string>
+	<string name="pref_title_tcpconn">TCP connections</string>
+	<string name="pref_title_bytesrecv">Bytes received</string>
+	<string name="pref_title_bytessent">Bytes sent</string>
+	<string name="pref_title_bytestotal">Bytes total</string>
+	<string name="pref_title_active">Service active</string>
+	<string name="pref_title_status">Status</string>
+	<string name="pref_title_natsize">NAT table size</string>
+	<string name="error_label">AziLink Error</string>
+	<string name="error_desc">AziLink was halted</string>
+	<string name="pref_key_tcpconn">pref_key_tcpconn</string>
+	<string name="pref_key_bytesrecv">pref_key_bytesrecv</string>
+	<string name="pref_key_bytessent">pref_key_bytessent</string>
+	<string name="pref_key_bytestotal">pref_key_bytestotal</string>
+	<string name="pref_key_natsize">pref_key_natsize</string>
+	<string name="pref_key_active">pref_key_active</string>
+	<string name="pref_key_status">pref_key_status</string>
+	<string name="pref_title_config">Advanced settings</string>
+	<string name="pref_title_about">About</string>
+	<string name="pref_title_tmobile">T-Mobile proxy fix</string>
+	<string name="pref_key_tmobile">pref_key_tmobile</string>
+	<string name="pref_title_tmobile_ms">T-Mobile fix timeout (ms)</string>
+	<string name="pref_key_tmobile_ms">pref_key_tmobile_ms</string>
+	<string name="pref_key_reset">pref_key_reset</string>
+	<string name="pref_title_reset">Reset byte counters</string>
+	<string name="pref_key_autodisconnect">pref_key_autodisconnect</string>
+	<string name="pref_title_autodisconnect">Close on vpn failure</string>
+	<string name="pref_desc_autodisconnect">Automatically close all connections
+		when the VPN link fails</string>
+	<string name="pref_desc_tmobile_ms">Try to detect falsely accepted connections</string>
+	<string name="pref_key_about">pref_key_about</string>
+	<string name="pref_key_saved_bytessent">pref_key_saved_bytessent</string>
+	<string name="pref_key_saved_bytesrecv">pref_key_saved_bytesrecv</string>
+	<string name="pref_key_saved_bytestotal">pref_key_saved_bytestotal</string>	
+	<string name="about_header">About AziLink</string>
+	<string name="about_howto">
+		This program simulates an unencrypted OpenVPN server on port 41927.\n
+		\n
+		Configuration steps:\n\n
+		1) Enable USB debugging on the phone.  From the home screen, this is under
+		Settings>Applications>Development>USB debugging.\n\n
+		2) On the host, run \"adb forward tcp:41927 tcp:41927\" to set up port forwarding.\n\n
+		3) On the phone, run AziLink and make sure \"Service active\" is checked.\n\n
+		4) Right click AziLink.ovpn on the host and select \"Start OpenVPN on this configuration file\".
+		   A copy of this text file appears below.
+	</string>
+	<string name="about_header_config">Host OpenVPN configuration</string>
+	<string name="about_config">
+		dev tun\n
+		remote 127.0.0.1 41927 tcp-client\n
+		ifconfig 192.168.56.2 192.168.56.1\n
+		route 0.0.0.0 128.0.0.0\n
+		route 128.0.0.0 128.0.0.0\n
+		socket-flags TCP_NODELAY\n
+		keepalive 10 30\n
+		dhcp-option DNS 192.168.56.1\n
+	</string>
+	<string name="about_header_notes">Notes</string>
+	<string name="about_notes">
+		T-Mobile\'s transparent proxy automatically accepts all outgoing connections.
+		This can sometimes create a problem when the target server refuses a connection,
+		since the host will see a successful connection followed by an immediate close.
+		The T-Mobile workaround in the advanced menu tries to detect this by stalling all
+		connection attempts for a configured length of time.  If the connection still exists
+		afterwards (or if any data is received from the remote end), then the connection succeeds.
+		Since this can degrade overall performance, it\'s disabled by default.\n
+		\n
+		Since this program doesn\'t run as root, it cannot forward ICMP-based ping requests.
+		To simulate this, all pings are translated internally into UDP pings.  Unfortunately, many
+		hosts do not respond to UDP ping requests.\n
+		\n
+	</string>
+<string name="pref_key_ping">pref_key_ping</string>
+<string name="pref_title_ping">OpenVPN ping timeouts</string>
+<string name="pref_desc_ping">Close VPN if no ping within 30 seconds</string>
+</resources>

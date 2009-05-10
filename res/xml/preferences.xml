@@ -1,0 +1,41 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<CheckBoxPreference android:key="@string/pref_key_active"
+		android:title="@string/pref_title_active" android:persistent="false" />
+	<Preference android:title="@string/pref_title_status"
+		android:summary="@string/status_unknown" android:key="@string/pref_key_status"
+		android:selectable="false" android:persistent="false" />
+	<Preference android:summary="0" android:title="@string/pref_title_bytesrecv"
+		android:key="@string/pref_key_bytesrecv" android:selectable="false"
+		android:persistent="false" />
+	<Preference android:summary="0" android:title="@string/pref_title_bytessent"
+		android:key="@string/pref_key_bytessent" android:selectable="false"
+		android:persistent="false" />
+	<Preference android:summary="0" android:key="@string/pref_key_bytestotal"
+		android:title="@string/pref_title_bytestotal" android:selectable="false"
+		android:persistent="false" />
+	<Preference android:summary="0" android:title="@string/pref_title_tcpconn"
+		android:key="@string/pref_key_tcpconn" android:selectable="false"
+		android:persistent="false" />
+	<Preference android:summary="0" android:title="@string/pref_title_natsize"
+		android:key="@string/pref_key_natsize" android:selectable="false"
+		android:persistent="false" />
+	<Preference android:title="@string/pref_title_reset"
+		android:key="@string/pref_key_reset" android:persistent="false" />
+	<PreferenceScreen android:title="@string/pref_title_config">
+		<CheckBoxPreference android:key="@string/pref_key_tmobile"
+			android:title="@string/pref_title_tmobile" android:summary="@string/pref_desc_tmobile_ms"
+			android:defaultValue="false" />
+		<EditTextPreference android:key="@string/pref_key_tmobile_ms"
+			android:numeric="integer" android:title="@string/pref_title_tmobile_ms"
+			android:defaultValue="1000" android:layout="?android:attr/preferenceLayoutChild"
+			android:dependency="@string/pref_key_tmobile" />
+		<CheckBoxPreference android:summary="@string/pref_desc_autodisconnect"
+			android:key="@string/pref_key_autodisconnect" android:title="@string/pref_title_autodisconnect"
+			android:defaultValue="true" />
+	<CheckBoxPreference android:key="@string/pref_key_ping" android:title="@string/pref_title_ping" android:summary="@string/pref_desc_ping" android:defaultValue="true"></CheckBoxPreference>
+</PreferenceScreen>
+	<PreferenceScreen android:title="@string/pref_title_about"
+		android:key="@string/pref_key_about">
+                    </PreferenceScreen>
+
+</PreferenceScreen>

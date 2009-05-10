@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="org.lfx.azilink" android:versionCode="3" android:versionName="2.0.1">
+    <application android:icon="@drawable/icon" android:label="@string/app_name" android:debuggable="false">
+        <activity android:label="@string/app_name" android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    <service android:name=".ForwardService" android:process="org.lfx.azilink.net">
+</service>
+<activity android:name=".AboutActivity"></activity>
+</application>
+
+
+<uses-permission android:name="android.permission.INTERNET"></uses-permission>
+<uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+</manifest> 
