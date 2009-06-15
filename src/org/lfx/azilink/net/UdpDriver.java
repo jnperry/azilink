@@ -153,6 +153,7 @@ public class UdpDriver extends SocketHandler implements TimerCallback {
 		
 		try {
 			for( ;; ) {
+				dat.clear();
 				int rlen = mChannel.read( dat );
 				if( rlen < 0 ) {
 					if(VpnNatEngine.sLog) Log.v("AziLink", "UDP read len was " + rlen );
