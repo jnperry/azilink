@@ -74,8 +74,8 @@ public class ForwardService extends Service implements VpnNatEngineNotify {
 		
 		if(sLog) Log.v("AziLink", "fwd::onCreate");
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-        mBytesSavedSent = pref.getLong(getString(R.string.pref_key_saved_bytessent), 0);
-        mBytesSavedRecv = pref.getLong(getString(R.string.pref_key_saved_bytesrecv), 0);
+		mBytesSavedSent = pref.getLong(getString(R.string.pref_key_saved_bytessent), 0);
+		mBytesSavedRecv = pref.getLong(getString(R.string.pref_key_saved_bytesrecv), 0);
                 
 		mEngine = new VpnNatEngine( this );
 		mEngine.setTMobileWorkaround(pref.getBoolean(getString(R.string.pref_key_tmobile),false));
@@ -97,6 +97,19 @@ public class ForwardService extends Service implements VpnNatEngineNotify {
 		//
 		// mPower = (PowerManager) getSystemService( Context.POWER_SERVICE );
 		// mPowerLock = mPower.newWakeLock( PowerManager.PARTIAL_WAKE_LOCK, "AziLink" );		
+
+		Notification not = new Notification(R.drawable.notify, getString(R.string.notify), 0);
+		
+		CharSequence contentTitle = getString(R.string.notify);
+		CharSequence contentText = "";
+		Intent notificationIntent = new Intent(this, MainActivity.class);
+		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+		
+		not.setLatestEventInfo(this, contentTitle, contentText, contentIntent);
+		not.flags = Notification.FLAG_NO_CLEAR |
+					Notification.FLAG_ONGOING_EVENT;
+
+		Reflection.startForeground(this, not);
 	}
 	
 	/**
@@ -111,7 +124,8 @@ public class ForwardService extends Service implements VpnNatEngineNotify {
 			saveByteCounters();
 		} catch (InterruptedException e) {
 			onError( e.toString() );
-		}				
+		}
+		Reflection.stopForeground(this);
 		super.onDestroy();
 	}
 	
@@ -139,7 +153,6 @@ public class ForwardService extends Service implements VpnNatEngineNotify {
 	 */
 	public void onLinkEstablished() {
 		Log.v("AziLink", "AziLink established connection to VPN");
-		setForeground( true );
 		mWifiLock.acquire();
 		mActive = true;
 		mPeriodicSaver.run();
@@ -157,7 +170,6 @@ public class ForwardService extends Service implements VpnNatEngineNotify {
 	public boolean onLinkLost() {
 		Log.v("AziLink", "AziLink lost connection to VPN");
 		mWifiLock.release();
-		setForeground( false );
 		mActive = false;
 		mPeriodicSaver.run();
 		

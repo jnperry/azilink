@@ -20,6 +20,7 @@ package org.lfx.azilink;
 import java.text.DecimalFormat;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
@@ -66,33 +67,33 @@ public class MainActivity extends PreferenceActivity {
 	/** Interface to the NAT process */
 	IAziLinkInformation mService = null;
 	/** How often should we update the link statistics? */
-	private static final int sUpdatePeriod = 5000;
+	private static final int sUpdatePeriod = 5000;	
 	
 	/**
 	 * Setup the basic UI.
 	 */
 	@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if(sLog) Log.v("AziLink","app::oncreate");
-                
-        addPreferencesFromResource(R.xml.preferences);
-       
-        // Get convenience pointers to all the important preferences.
-        mActive = (CheckBoxPreference) findPreference(getString(R.string.pref_key_active));
-        mStatus 		= findPreference(getString(R.string.pref_key_status));
-        mBytesRecv 		= findPreference(getString(R.string.pref_key_bytesrecv));
-        mBytesSent 		= findPreference(getString(R.string.pref_key_bytessent));
-        mBytesTotal 	= findPreference(getString(R.string.pref_key_bytestotal));
-        mTcpConnections = findPreference(getString(R.string.pref_key_tcpconn));
-        mNatSize 		= findPreference(getString(R.string.pref_key_natsize));
-        mTM = (EditTextPreference) findPreference(getString(R.string.pref_key_tmobile_ms));
-                
-        // Activate/deactivate service
-        mActive.setOnPreferenceChangeListener(mActiveListen);
-        
-        // Reset the statistics
-        Preference resetStats = findPreference(getString(R.string.pref_key_reset));        
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		if(sLog) Log.v("AziLink","app::oncreate");
+				
+		addPreferencesFromResource(R.xml.preferences);
+		
+		// Get convenience pointers to all the important preferences.
+		mActive = (CheckBoxPreference) findPreference(getString(R.string.pref_key_active));
+		mStatus 		= findPreference(getString(R.string.pref_key_status));
+		mBytesRecv 		= findPreference(getString(R.string.pref_key_bytesrecv));
+		mBytesSent 		= findPreference(getString(R.string.pref_key_bytessent));
+		mBytesTotal 	= findPreference(getString(R.string.pref_key_bytestotal));
+		mTcpConnections = findPreference(getString(R.string.pref_key_tcpconn));
+		mNatSize 		= findPreference(getString(R.string.pref_key_natsize));
+		mTM = (EditTextPreference) findPreference(getString(R.string.pref_key_tmobile_ms));
+				
+		// Activate/deactivate service
+		mActive.setOnPreferenceChangeListener(mActiveListen);
+		
+		// Reset the statistics
+		Preference resetStats = findPreference(getString(R.string.pref_key_reset));        
 		resetStats.setOnPreferenceClickListener(mResetHandler);
 		
 		// About dialog
@@ -114,7 +115,9 @@ public class MainActivity extends PreferenceActivity {
 	protected void onStart() {
 		if(sLog) Log.v("AziLink","app::onstart");
 		super.onStart();
-		bindService( new Intent(this, ForwardService.class), mConnection, 0 );
+		// Set active checkbox to false; it'll be updated later
+		mActive.setChecked(false);
+		bindService( new Intent(this, ForwardService.class), mConnection, 0 );		
 		mUpdateCallback.run();		
 	}
 	
@@ -128,7 +131,7 @@ public class MainActivity extends PreferenceActivity {
 		unbindService(mConnection);
 		super.onStop();
 	}
-		
+	
 	/**
 	 * Connection to the NAT service.
 	 */
@@ -228,8 +231,8 @@ public class MainActivity extends PreferenceActivity {
 				
 				// This is not called regularly, so it's okay to be a little slow
 				SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-		        ls.mBytesSent = pref.getLong(getString(R.string.pref_key_saved_bytessent), 0);
-		        ls.mBytesRecv = pref.getLong(getString(R.string.pref_key_saved_bytesrecv), 0);
+				ls.mBytesSent = pref.getLong(getString(R.string.pref_key_saved_bytessent), 0);
+				ls.mBytesRecv = pref.getLong(getString(R.string.pref_key_saved_bytesrecv), 0);
 			}
 			
 			if( ls.mStatus.length() == 0 ) {
@@ -294,5 +297,5 @@ public class MainActivity extends PreferenceActivity {
 			mTM.setSummary((String)newValue);
 			return true;
 		}		
-	};
+	};	
 }

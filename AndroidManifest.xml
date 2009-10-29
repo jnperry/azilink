@@ -6,14 +6,21 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            
+</intent-filter>
         </activity>
     <service android:name=".ForwardService" android:process="org.lfx.azilink.net">
 </service>
 <activity android:name=".AboutActivity"></activity>
+<receiver android:name=".BootActivity"><intent-filter><action android:name="android.intent.action.BOOT_COMPLETED"></action>
+<category android:name="android.intent.category.HOME"></category>
+</intent-filter>
+</receiver>
 </application>
 
 
 <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+<uses-sdk android:minSdkVersion="2"></uses-sdk>
+<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"></uses-permission>
 </manifest> 
