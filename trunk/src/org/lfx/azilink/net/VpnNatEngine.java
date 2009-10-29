@@ -17,7 +17,6 @@
 
 package org.lfx.azilink.net;
 
-import android.os.SystemProperties;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
@@ -96,7 +95,7 @@ public class VpnNatEngine implements TransferStatistics {
 	 * @return ip address of dns server
 	 */
 	static public int getDnsIp() {
-		String ip = SystemProperties.get("net.dns1");
+		String ip = org.lfx.azilink.Reflection.getDNS();
 		if( ip == "" ) ip = "4.2.2.2";
 		try {
 			Inet4Address addr = (Inet4Address) Inet4Address.getByName(ip);
